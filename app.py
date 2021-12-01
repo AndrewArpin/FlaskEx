@@ -13,8 +13,12 @@ db = client.btc
 col = db["btc"]
 
 #for x in col.find_one():
-for x in col.find({},{ "_id": 0, "bpi": 1}):
-  print(x)
+for x in col.find({},{ "_id": 1}):
+  abc = x.get("id")
+  print(abc)
+
+y = col.count_documents({}); 
+print(y)
 
 
 @app.route('/')
