@@ -13,13 +13,11 @@ db = client.btc
 col = db["btc"]
 
 #for x in col.find_one():
-for x in col.find({},{ "_id": 1}):
-  abc = x.get("id")
-  print(abc)
-
-y = col.count_documents({}); 
-print(y)
-
+for x in col.find({},{ "_id": 0, "bpi": 1}):                 
+    a = (x['bpi']['USD']['code'])
+    a = a + " : '" + (x['bpi']['USD']['rate']) + "'"
+    print(a)
+    
 
 @app.route('/')
 def index():
@@ -28,7 +26,8 @@ def index():
 
 @app.route('/google-charts/pie-chart')
 def google_pie_chart():
-    data = {'Task' : 'Hours per Day', 'Work' : 11, 'Eat' : 2, 'Commute' : 2, 'Watch TV' : 2,'Sleep' : 7}
+    #data = {'Task' : 'Hours per Day', 'Work' : 11, 'Eat' : 2, 'Commute' : 2, 'Watch TV' : 2,'Sleep' : 7}
+    data = {'Year': 'Sales', 'Work' : 11, '2004' : 1000, '2005' : 20, '2006' : 2000,'2007' : 7102}
     return render_template('pie-chart.html', data=data)
 
 if __name__ == "__main__":
