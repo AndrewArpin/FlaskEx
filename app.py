@@ -38,7 +38,7 @@ while True:
             return render_template('index.html')
 
 
-        @app.route('/google-charts/pie-chart')
+        @app.route('/google-charts/curve-chart')
         def google_pie_chart():  
             data = curve
             return render_template('curve-chart.html', data = data)
