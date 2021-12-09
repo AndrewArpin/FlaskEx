@@ -27,15 +27,16 @@ while True:
         for x in col.find({},{ "_id": 1,"rates": 1}): 
                 num += 1                
                 a = num
-                b = (x['rates']['usd']['value'])            
+                b = (x['rates']['usd']['value'])    
+                convert = b        
                 curve[a] = b
-                print(num)
-        print(curve)      
-
+        print(curve)                                  
+        print(convert)
 
         @app.route('/')
         def index():
-            return render_template('index.html')
+            a = convert
+            return render_template('index.html', a = a )
 
 
         @app.route('/google-charts/curve-chart')
