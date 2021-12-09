@@ -11,49 +11,53 @@ client = MongoClient('mongodb+srv://andrewarpin:Waxer75123@cluster0.2njwl.mongod
 db = client.Currency
 col = db["Currency"]
 
-#BTC
-while True:    
-    r = requests.get("https://api.coingecko.com/api/v3/exchange_rates")
-    if r.status_code == 200:
-
-        data = r.json()
-        print(data)  
-        db.Currency.insert_one(data)     
-        
-
-        curve = {'Task': 'Price'}
-        num = 0
-
-        for x in col.find({},{ "_id": 1,"rates": 1}): 
-                num += 1                
-                a = num
-                b = (x['rates']['usd']['value'])            
-                curve[a] = b
-                print(num)
-        print(curve)      
 
 
-        @app.route('/')
-        def index():
+curve = {'Task': 'Price'}
+num = 0
+
+for x in col.find({},{ "_id": 1,"rates": 1}): 
+    num += 1                
+    a = num
+    b = (x['rates']['usd']['value'])            
+    curve[a] = b
+    print(num)
+    print(curve)      
+
+
+    @app.route('/')
+    def index():
             return render_template('index.html')
 
 
-        @app.route('/google-charts/pie-chart')
-        def google_pie_chart():  
-            data = curve
-            return render_template('curve-chart.html', data = data)
+    @app.route('/google-charts/pie-chart')
+    def google_pie_chart():  
+        data = curve
+        return render_template('curve-chart.html', data = data)
 
-        @app.route('/google-charts/barchart')
-        def google_barchart():  
-            data = curve
-            return render_template('barchart.html', data = data)
+    @app.route('/google-charts/barchart')
+    def google_barchart():  
+        data = curve
+        return render_template('barchart.html', data = data)
 
-        if __name__ == "__main__":
-            app.run()
-        time.sleep(60)  
-    else:
-            exit()
+    if __name__ == "__main__":
+        app.run()
+ 
 
+
+#BTC
+# while True:    
+#     r = requests.get("https://api.coingecko.com/api/v3/exchange_rates")
+#     if r.status_code == 200:
+
+#         data = r.json()
+#         print(data)  
+#         db.Currency.insert_one(data) 
+        
+#                time.sleep(60)  
+#     else:
+#             exit()    
+        
 
 #GAS PRICES
 # url = "https://gas-price.p.rapidapi.com/europeanCountries"
