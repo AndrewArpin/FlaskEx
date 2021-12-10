@@ -10,18 +10,19 @@ from pymongo import MongoClient
 client = MongoClient('mongodb+srv://andrewarpin:Waxer75123@cluster0.2njwl.mongodb.net/myFirstDatabase?retryWrites=true&w=majority')
 db = client.Currency
 col = db["Currency"]
+myquery = { "_id": "ObjectId('61b23892de0c5b9a948ab11c')" } 
 
 #BTC
 while True:    
     r = requests.get("https://api.coingecko.com/api/v3/exchange_rates")
     if r.status_code == 200:
 
-        data = r.json()
-        print(data)  
-        db.Currency.insert_one(data)     
-        
+        # data = r.json()
+        # print(data)  
+        # db.Currency.insert_one(data)            
 
         curve = {'Task': 'Price'}
+        eth = {'convert':'convert'}
         num = 0
 
         for x in col.find({},{ "_id": 1,"rates": 1}): 
@@ -30,13 +31,21 @@ while True:
                 b = (x['rates']['usd']['value'])    
                 convert = b        
                 curve[a] = b
-        print(curve)                                  
-        print(convert)
+
+        num = 0
+        for x in col.find({},{ "_id": 1,"rates": 1}): 
+                num += 1                
+                a = num
+                b = (x['rates']['eth']['value'])    
+                eth[a] = b
+        print(eth)
+
 
         @app.route('/')
         def index():
-            a = convert
-            return render_template('index.html', a = a )
+            data = convert
+            print(data * 2)
+            return render_template('index.html', data = data)
 
 
         @app.route('/google-charts/curve-chart')
@@ -48,6 +57,12 @@ while True:
         def google_barchart():  
             data = curve
             return render_template('barchart.html', data = data)
+
+        @app.route('/google-charts/eth-curve')
+        def eth_curve():  
+            data = eth
+            return render_template('Eth-curve.html', data = data)
+
 
         if __name__ == "__main__":
             app.run()

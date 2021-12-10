@@ -18,6 +18,9 @@
                 <li class="nav-item">
                   <a class="nav-link" href="/google-charts/barchart">Bar Chart USD to BTC</a>
                 </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/google-charts/eth-curve">Etherium Curve</a>
+              </li>
               </ul>
             </div>
           </div>
@@ -54,14 +57,13 @@
 
         var options = {
         title: "Bar Chart USD to BTC",
-        width: 600,
-        height: 400,
+        width: 1400,
+        height: 800,
         bar: {groupWidth: "95%"},
         legend: { position: "none" },
       };
       var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
       chart.draw(view, options);
-
     }
   
     </script>
