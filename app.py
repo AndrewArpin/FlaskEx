@@ -22,20 +22,22 @@ while True:
         # db.Currency.insert_one(data)            
 
         curve = {'Task': 'Price'}
-        eth = {'convert':'convert'}
-        num = 0
+        eth = {'Conversion':'Conversion'}
+        z = 0
+        y = 0
 
         for x in col.find({},{ "_id": 1,"rates": 1}): 
-                num += 1                
-                a = num
+                z += 1                
+                a = z
                 b = (x['rates']['usd']['value'])    
                 convert = b        
                 curve[a] = b
 
-        num = 0
+        
+
         for x in col.find({},{ "_id": 1,"rates": 1}): 
-                num += 1                
-                a = num
+                y += 1                
+                a = y
                 b = (x['rates']['eth']['value'])    
                 eth[a] = b
         print(eth)
@@ -62,11 +64,14 @@ while True:
         def eth_curve():  
             data = eth
             return render_template('Eth-curve.html', data = data)
-
+        
+        @app.route('/google-charts/fitgap')
+        def fitgap():  
+            return render_template('fitgap.html')
 
         if __name__ == "__main__":
             app.run()
-        time.sleep(60)  
+        time.sleep(86400)  
     else:
             exit()
 
