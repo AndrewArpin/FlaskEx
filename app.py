@@ -32,7 +32,6 @@ while True:
                 b = (x['rates']['usd']['value'])    
                 convert = b        
                 curve[a] = b
-
         
 
         for x in col.find({},{ "_id": 1,"rates": 1}): 
@@ -40,7 +39,8 @@ while True:
                 a = y
                 b = (x['rates']['eth']['value'])    
                 eth[a] = b
-        print(eth)
+
+     
 
 
         @app.route('/')
